@@ -6,15 +6,15 @@ USER 0
 
 COPY requirements.txt /
 
+RUN apt-get -y update && \
+    apt-get -y --no-install-recommends install ca-certificates sshpass unzip gettext libldap2-dev libsasl2-dev ldap-utils git vim wget curl apt-transport-https python3 python3-pip python3-pip-whl python3-ldap
+
 RUN \
     mkdir -p /etc/apt/trusted.gpg.d && \
     mkdir -p /etc/apt/sources.list.d && \
     wget --no-check-certificate https://deb.theforeman.org/foreman.asc -O /etc/apt/trusted.gpg.d/foreman.asc && \
     echo "deb http://deb.theforeman.org/ bookworm 3.13" > /etc/apt/sources.list.d/foreman.list && \
     echo "deb http://deb.theforeman.org/ plugins 3.13" >> /etc/apt/sources.list.d/foreman.list
-
-RUN apt-get -y update && \
-    apt-get -y --no-install-recommends install ca-certificates sshpass unzip gettext libldap2-dev libsasl2-dev ldap-utils git vim wget curl apt-transport-https python3 python3-pip python3-pip-whl python3-ldap
 
 RUN apt-get -y update && \
     pip install --no-cache-dir -r /requirements.txt

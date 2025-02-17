@@ -17,6 +17,7 @@ RUN \
     echo "deb http://deb.theforeman.org/ plugins 3.13" >> /etc/apt/sources.list.d/foreman.list
 
 RUN apt-get -y update && \
+    pip config set global.require-virtualenv False && \
     pip install --no-cache-dir -r /requirements.txt
 
 RUN \

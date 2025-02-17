@@ -18,7 +18,7 @@ RUN \
 
 RUN apt-get -y update && \
     pip config set global.require-virtualenv False && \
-    pip install --no-cache-dir -r /requirements.txt
+    pip install --no-cache-dir --break-system-packages -r /requirements.txt
 
 RUN \
     apt-get -y install foreman foreman-postgresql ruby-foreman-ansible && \

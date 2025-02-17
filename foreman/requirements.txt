@@ -1,0 +1,10 @@
+ansible
+psycopg2-binary==2.*
+ldap3==2.9.*
+configparser
+boto3
+paramiko
+lxml
+passlib==1.7.*
+bcrypt==4.2.*
+python-ldap==3.4.*

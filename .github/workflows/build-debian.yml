@@ -1,0 +1,45 @@
+name: Build Image Debian based
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        type: boolean
+        description: "Clean images"
+        default: false
+
+env:
+  REPOSITORY: ${{ vars.IMAGE_NAME }}
+  IMAGETAG: ${{ github.ref_name }}-${{ github.run_number }}
+
+run-name: Build Image -> ${{ github.ref_name }}-${{ github.run_number }}
+
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    environment:
+      name: BUILD
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: 'Login to GitHub Container Registry'
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.GITHUB_TOKEN}}
+
+    - name: build image
+      run: |
+        docker build -t ghcr.io/JohnSmall02/${{ env.REPOSITORY }}:${{ env.IMAGETAG }} --no-cache --progress=plain ./foreman
+
+    - name: Show images
+      run: |
+        docker images
+
+    # - name: push image
+    #   run: |
+    #     docker push ghcr.io/JohnSmall02/${{ env.REPOSITORY }}:${{ env.IMAGETAG }}
+    #     docker rmi ghcr.io/JohnSmall02/${{ env.REPOSITORY }}:${{ env.IMAGETAG }}

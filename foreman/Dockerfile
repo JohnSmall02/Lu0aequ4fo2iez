@@ -22,7 +22,8 @@ RUN \
     apt-get -y install foreman foreman-postgresql ruby-foreman-ansible foreman-installer && \
     apt-get purge -y --auto-remove && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -f /etc/foreman/database.yml /etc/foreman/settings.yml
 
 ARG HOME=/home/foreman
 

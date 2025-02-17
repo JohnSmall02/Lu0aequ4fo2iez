@@ -34,16 +34,11 @@ RUN \
 ARG HOME=/home/foreman
 
 WORKDIR ${HOME}
-RUN groupadd -r foreman -f -g 0 && \
-    useradd -u 1001 -r -g foreman -d $HOME -s /sbin/nologin \
-    -c "Foreman Application User" foreman && \
-    chown -R 1001:0 $HOME && \
-    chmod -R g=u ${HOME}
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-    
+
 USER 1001
 
 # Start the main process.

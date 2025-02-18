@@ -22,9 +22,9 @@ RUN \
     apt-get purge -y --auto-remove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -f /etc/foreman/database.yml /etc/foreman/settings.yml && \
+    rm -f /etc/foreman/database.yml /etc/foreman/settings.yaml && \
     ln -sf ./config/database.yml /etc/foreman/database.yml && \
-    ln -sf ./config/settings.yml /etc/foreman/settings.yml
+    ln -sf ./config/settings.yaml /etc/foreman/settings.yaml
 
 
 ARG HOME=/home/foreman

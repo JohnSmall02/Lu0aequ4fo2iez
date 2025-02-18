@@ -12,9 +12,8 @@ RUN apt-get -y update && \
 RUN \
     wget --no-check-certificate https://deb.theforeman.org/foreman.asc -O /etc/apt/trusted.gpg.d/foreman.asc && \
     echo "deb http://deb.theforeman.org/ bookworm 3.13" > /etc/apt/sources.list.d/foreman.list && \
-    echo "deb http://deb.theforeman.org/ plugins 3.13" >> /etc/apt/sources.list.d/foreman.list
-
-RUN apt-get -y update && \
+    echo "deb http://deb.theforeman.org/ plugins 3.13" >> /etc/apt/sources.list.d/foreman.list && \
+    apt-get -y update && \
     pip config set global.require-virtualenv False && \
     pip install --no-cache-dir --break-system-packages -r /requirements.txt
 
@@ -23,7 +22,10 @@ RUN \
     apt-get purge -y --auto-remove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -f /etc/foreman/database.yml /etc/foreman/settings.yml
+    rm -f /etc/foreman/database.yml /etc/foreman/settings.yml && \
+    ln -sf ./config/database.yml /etc/foreman/database.yml && \
+    ln -sf ./config/settings.yml /etc/foreman/settings.yml
+
 
 ARG HOME=/home/foreman
 

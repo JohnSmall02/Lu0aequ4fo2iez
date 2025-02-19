@@ -25,7 +25,7 @@ RUN \
     rm -f /etc/foreman/database.yml /etc/foreman/settings.yaml && \
     ln -sf ./config/database.yml /etc/foreman/database.yml && \
     ln -sf ./config/settings.yaml /etc/foreman/settings.yaml && \
-    mkdir -p /etc/sudoers.d/ && \
+    mkdir -m 440 /etc/sudoers.d && \
     echo "foreman ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-foreman && chmod 440 /etc/sudoers.d/90-foreman && \
     usermod -a -G sudo,adm foreman
 

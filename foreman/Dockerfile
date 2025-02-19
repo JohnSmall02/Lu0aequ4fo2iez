@@ -24,8 +24,10 @@ RUN \
     rm -rf /var/lib/apt/lists/* && \
     rm -f /etc/foreman/database.yml /etc/foreman/settings.yaml && \
     ln -sf ./config/database.yml /etc/foreman/database.yml && \
-    ln -sf ./config/settings.yaml /etc/foreman/settings.yaml
-
+    ln -sf ./config/settings.yaml /etc/foreman/settings.yaml && \
+    mkdir -p /etc/sudoers.d/ && \
+    echo "foreman ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-foreman && chmod 440 /etc/sudoers.d/90-foreman && \
+    usermod -a -G sudo,adm foreman
 
 ARG HOME=/usr/share/foreman
 
@@ -35,7 +37,7 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-USER 999
+USER foreman
 
 # Start the main process.
 CMD bundle exec bin/rails server
